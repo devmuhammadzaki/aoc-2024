@@ -2,7 +2,6 @@
 
 $filename = "input.txt";
 
-
 try {
     $left_table = [];
     $right_table = [];
@@ -36,6 +35,31 @@ try {
     # Get total difference:
     $total_difference = array_sum($differences);
     echo "Total Difference: {$total_difference}" . PHP_EOL;
+
+    # Get total similarity score
+    $total_similarity_score = calculateSimilarityScore($left_table, $right_table);
+    echo "Total Similarity Score: $total_similarity_score" . PHP_EOL;
 } catch (Exception $e) {
     echo "Error reading file: " . $e->getMessage();
+}
+
+/**
+ * Calculate the similarity score
+ *
+ * @param array $left_table List of numbers from the left table
+ * @param array $right_table List of numbers from the right table
+ * @return int Total similarity score
+ */
+function calculateSimilarityScore(array $left_table, array $right_table): int
+{
+    $right_counts = array_count_values($right_table);
+    $total_similarity_score = 0;
+
+    foreach ($left_table as $number) {
+        $times_in_right = $right_counts[$number] ?? 0;
+        $score = $number * $times_in_right;
+        $total_similarity_score += $score;
+    }
+
+    return $total_similarity_score;
 }
