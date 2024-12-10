@@ -42,8 +42,6 @@ try {
     for ($i = 0; $i < min(count($left_table), count($right_table)); $i++) {
         $difference = abs($left_table[$i] - $right_table[$i]);
         $differences[] = $difference;
-
-        echo "Pair: ({$left_table[$i]}, {$right_table[$i]}) - Difference: {$difference}" . PHP_EOL;
     }
 
     # Get total difference:
