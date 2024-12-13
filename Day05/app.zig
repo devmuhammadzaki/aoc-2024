@@ -7,8 +7,6 @@ var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
 const global_alloc = arena.allocator();
 const max_read = 21 * 1024;
 
-// Cheating? I just inspected the data and
-// see what minimum and maximum page values were
 const min = 11;
 const max = 99;
 
@@ -35,8 +33,6 @@ pub fn main() !void {
 }
 
 fn part1(updates: [][]u8, table: OrderingGraph) void {
-    // Now its a sorting and graph problem,
-    // The question is (are these arrays sorted?)
     var sum: usize = 0;
     for (updates) |update| {
         if (isInOrder(update, table)) {
@@ -85,7 +81,6 @@ fn parseOrderings(allocator: Allocator, data: []const u8) ![]Ordering {
 }
 
 fn buildTable(orderings: []Ordering) OrderingGraph {
-    // Is there a better way to initailzie an multidimensional array?
     var table: OrderingGraph = .{[_]ChildStatus{.unknown} ** (max - min + 1)} ** (max - min + 1);
 
     for (orderings) |value| {
@@ -97,7 +92,6 @@ fn buildTable(orderings: []Ordering) OrderingGraph {
     return table;
 }
 
-/// Load the Data from path
 fn loadData(allocator: Allocator, path: []const u8) ![]u8 {
     const fd = try fs.cwd().openFile(path, .{});
     return try fd.readToEndAlloc(allocator, max_read);
